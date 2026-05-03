@@ -4,6 +4,10 @@
 @import "tw-animate-css";
 @plugin "@tailwindcss/typography";
 
+:root {
+  font-family: "AppFont", sans-serif;
+}
+
 @font-face {
   font-family: "AppFont";
   src: url("@assets/Noori_Regular_1777803307583.ttf") format("truetype");
@@ -165,6 +169,9 @@
   body {
     font-family: var(--app-font-sans);
     @apply antialiased bg-background text-foreground selection:bg-secondary selection:text-secondary-foreground;
+  }
+  html {
+    font-family: var(--app-font-sans);
   }
   button,
   input,
