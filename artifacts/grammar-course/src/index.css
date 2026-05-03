@@ -170,11 +170,6 @@
     font-family: var(--app-font-serif);
     @apply tracking-tight text-primary;
   }
-  [dir="rtl"],
-  [lang="ur"],
-  .urdu {
-    font-family: var(--app-font-urdu);
-  }
   button,
   input,
   textarea,
@@ -186,6 +181,11 @@
   a,
   li,
   div {
-    font-family: inherit;
+    font-family: var(--app-font-sans);
+  }
+  [dir="rtl"],
+  [lang="ur"],
+  .urdu {
+    font-family: var(--app-font-urdu);
   }
 }
