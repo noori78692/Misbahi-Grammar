@@ -96,8 +96,8 @@
   --input: 214 32% 91%;
   --ring: 221 83% 30%;
 
-  --app-font-sans: "Jameel Noori Nastaleeq", serif;
-  --app-font-serif: "Jameel Noori Nastaleeq", serif;
+  --app-font-sans: "Plus Jakarta Sans", "Inter", sans-serif;
+  --app-font-serif: "Lora", "Georgia", serif;
   --app-font-urdu: "Jameel Noori Nastaleeq", serif;
   --radius: 0.5rem;
 
@@ -169,6 +169,11 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--app-font-serif);
     @apply tracking-tight text-primary;
+  }
+  [dir="rtl"],
+  [lang="ur"],
+  .urdu {
+    font-family: var(--app-font-urdu);
   }
   button,
   input,
