@@ -54,147 +54,106 @@ export default function Home() {
   ];
 
   return (
-    <div className="flex flex-col min-h-screen">
-      {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-primary/90 via-primary to-blue-900 text-primary-foreground py-20 md:py-28 px-4">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-10 left-10 w-64 h-64 rounded-full bg-white/20 blur-3xl" />
-          <div className="absolute bottom-10 right-10 w-80 h-80 rounded-full bg-secondary/30 blur-3xl" />
-        </div>
-        <div className="max-w-5xl mx-auto relative z-10 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-sm font-medium mb-6 backdrop-blur-sm">
-            <span className="w-2 h-2 rounded-full bg-secondary animate-pulse" />
-            {t("home.badge")}
-          </div>
-          <h1 className="font-serif text-4xl md:text-6xl font-bold leading-tight text-white mb-6">
-            {t("home.hero.title1")}
-            <br />
-            <span className="text-secondary">{t("home.hero.title2")}</span>
-          </h1>
-          <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto mb-10 leading-relaxed">
-            {t("home.hero.desc")}
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/levels"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-secondary text-secondary-foreground font-semibold text-base hover:opacity-90 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5"
-            >
-              {t("home.cta.start")}
-              <ChevronRight className="w-5 h-5" />
-            </Link>
-            <Link
-              href="/level/beginner/lessons"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-white/10 border border-white/20 text-white font-semibold text-base hover:bg-white/20 transition-all backdrop-blur-sm"
-            >
-              {t("home.cta.begin")}
-            </Link>
+    <div className="min-h-screen bg-background">
+      <section className="px-4 pt-4 pb-6">
+        <div className="max-w-md mx-auto">
+          <div className="rounded-[2rem] bg-gradient-to-br from-primary via-blue-800 to-indigo-950 text-white p-5 shadow-2xl overflow-hidden relative">
+            <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-white/10 blur-3xl" />
+            <div className="relative z-10">
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <p className="text-white/70 text-xs font-medium uppercase tracking-[0.2em]">{t("nav.tagline")}</p>
+                  <h1 className="text-2xl font-bold mt-1">{t("home.hero.title1")}</h1>
+                </div>
+                <div className="w-12 h-12 rounded-2xl bg-white/15 border border-white/10 flex items-center justify-center">
+                  <BookOpen className="w-6 h-6" />
+                </div>
+              </div>
+              <p className="text-white/80 text-sm leading-6">{t("home.hero.desc")}</p>
+              <div className="mt-5 flex gap-3">
+                <Link href="/levels" className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-2xl bg-secondary text-secondary-foreground font-semibold shadow-lg">
+                  {t("home.cta.start")}
+                  <ChevronRight className="w-4 h-4" />
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Stats bar */}
-      <section className="bg-card border-b border-border">
-        <div className="max-w-5xl mx-auto px-4 py-6 grid grid-cols-2 md:grid-cols-4 divide-x divide-border">
+      <section className="px-4 pb-5">
+        <div className="max-w-md mx-auto grid grid-cols-4 gap-3">
           {[
             { value: "18", labelKey: "home.stats.lessons" },
             { value: "3", labelKey: "home.stats.levels" },
             { value: "54+", labelKey: "home.stats.quizzes" },
             { value: "100%", labelKey: "home.stats.free" },
           ].map((s) => (
-            <div key={s.labelKey} className="text-center px-4 py-2">
-              <div className="font-serif text-3xl font-bold text-primary">{s.value}</div>
-              <div className="text-sm text-muted-foreground mt-0.5">{t(s.labelKey)}</div>
+            <div key={s.labelKey} className="rounded-2xl bg-card border border-border p-3 text-center shadow-sm">
+              <div className="text-xl font-bold text-primary">{s.value}</div>
+              <div className="text-[10px] leading-tight text-muted-foreground mt-1">{t(s.labelKey)}</div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Features */}
-      <section className="py-16 md:py-20 px-4 bg-background">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="font-serif text-3xl md:text-4xl font-bold text-primary mb-4">{t("home.features.title")}</h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">{t("home.features.subtitle")}</p>
-          </div>
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {features.map((f) => (
-              <Link key={f.titleKey} href={f.href} className="group p-6 rounded-2xl border border-border bg-card hover:border-primary/30 hover:shadow-md transition-all duration-200 block">
-                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-                  <f.icon className="w-5 h-5 text-primary" />
-                </div>
-                <h3 className="font-serif font-semibold text-primary text-base mb-2">{t(f.titleKey)}</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">{t(f.descKey)}</p>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Course outline */}
-      <section className="py-16 md:py-20 px-4 bg-muted/40">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="font-serif text-3xl md:text-4xl font-bold text-primary mb-4">{t("home.outline.title")}</h2>
-            <p className="text-muted-foreground text-lg">{t("home.outline.subtitle")}</p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-6">
-            {topics.map((top) => (
-              <Link key={top.levelKey} href={`/level/${top.levelKey.split(".")[1]}/lessons`} className="rounded-2xl bg-card border border-border overflow-hidden hover:shadow-md transition-all duration-200 block">
-                <div
-                  className={`px-6 py-4 font-serif text-lg font-bold ${
-                    top.color === "blue"
-                      ? "bg-primary text-primary-foreground"
-                      : top.color === "gold"
-                      ? "bg-secondary text-secondary-foreground"
-                      : "bg-emerald-700 text-white"
-                  }`}
-                >
-                  {t(top.levelKey)}
-                </div>
-                <ul className="p-4 space-y-2">
-                  {top.items.map((item, i) => (
-                    <li key={i} className="flex items-start gap-3 text-sm text-foreground/80 py-1.5 border-b border-border/50 last:border-0">
-                      <span className="flex-shrink-0 w-5 h-5 rounded-full bg-muted text-xs flex items-center justify-center font-medium text-muted-foreground mt-0.5">{i + 1}</span>
-                      <span>
-                        <span className="block">{item.en}</span>
-                        <span className="block text-xs text-muted-foreground mt-0.5">{item.ur}</span>
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="py-16 md:py-20 px-4 bg-primary text-primary-foreground">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-white mb-4">{t("home.cta2.title")}</h2>
-          <p className="text-white/80 text-lg mb-8 leading-relaxed">{t("home.cta2.desc")}</p>
-          <Link
-            href="/levels"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-secondary text-secondary-foreground font-semibold text-base hover:opacity-90 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5"
-          >
-            {t("home.cta2.btn")}
-            <ChevronRight className="w-5 h-5" />
+      <section className="px-4 pb-5">
+        <div className="max-w-md mx-auto grid grid-cols-2 gap-3">
+          <Link href="/levels" className="rounded-2xl bg-card border border-border p-4 shadow-sm">
+            <Layers className="w-5 h-5 text-primary mb-3" />
+            <h2 className="text-sm font-semibold">{t("feature.levels.title")}</h2>
+            <p className="text-xs text-muted-foreground mt-1 leading-5">{t("feature.levels.desc")}</p>
+          </Link>
+          <Link href="/translator" className="rounded-2xl bg-card border border-border p-4 shadow-sm">
+            <Languages className="w-5 h-5 text-primary mb-3" />
+            <h2 className="text-sm font-semibold">{t("feature.urdu.title")}</h2>
+            <p className="text-xs text-muted-foreground mt-1 leading-5">{t("feature.urdu.desc")}</p>
+          </Link>
+          <Link href="/levels" className="rounded-2xl bg-card border border-border p-4 shadow-sm">
+            <CheckCircle2 className="w-5 h-5 text-primary mb-3" />
+            <h2 className="text-sm font-semibold">{t("feature.quiz.title")}</h2>
+            <p className="text-xs text-muted-foreground mt-1 leading-5">{t("feature.quiz.desc")}</p>
+          </Link>
+          <Link href="/levels" className="rounded-2xl bg-card border border-border p-4 shadow-sm">
+            <Star className="w-5 h-5 text-primary mb-3" />
+            <h2 className="text-sm font-semibold">{t("feature.progress.title")}</h2>
+            <p className="text-xs text-muted-foreground mt-1 leading-5">{t("feature.progress.desc")}</p>
           </Link>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-border bg-card py-8 px-4 mt-auto">
-        <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <BookOpen className="w-4 h-4 text-primary" />
-            <span className="font-serif font-semibold text-primary text-sm">Misbahi Grammar</span>
+      <section className="px-4 pb-6">
+        <div className="max-w-md mx-auto">
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-lg font-bold text-primary">{t("home.outline.title")}</h2>
+            <span className="text-xs text-muted-foreground">{t("home.outline.subtitle")}</span>
           </div>
-          <p className="text-muted-foreground text-xs text-center">
-            {t("nav.tagline")} — {t("home.badge")}
-          </p>
+          <div className="space-y-3">
+            {topics.map((top) => (
+              <Link key={top.levelKey} href={`/level/${top.levelKey.split(".")[1]}/lessons`} className="block rounded-2xl border border-border bg-card overflow-hidden shadow-sm">
+                <div className={`px-4 py-3 text-sm font-semibold ${top.color === "blue" ? "bg-primary text-primary-foreground" : top.color === "gold" ? "bg-secondary text-secondary-foreground" : "bg-emerald-700 text-white"}`}>
+                  {t(top.levelKey)}
+                </div>
+                <div className="p-4">
+                  <div className="space-y-2">
+                    {top.items.slice(0, 3).map((item, i) => (
+                      <div key={i} className="flex items-start gap-3 text-sm">
+                        <span className="w-6 h-6 rounded-full bg-muted text-muted-foreground flex items-center justify-center text-xs font-medium flex-shrink-0">{i + 1}</span>
+                        <div>
+                          <div>{item.en}</div>
+                          <div className="text-xs text-muted-foreground mt-0.5">{item.ur}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
-      </footer>
+      </section>
+
+      <div className="h-20" />
     </div>
   );
 }
