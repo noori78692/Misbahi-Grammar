@@ -4,6 +4,12 @@
 @import "tw-animate-css";
 @plugin "@tailwindcss/typography";
 
+@font-face {
+  font-family: "Jameel Noori Nastaleeq";
+  src: url("@assets/Jameel_Noori_Nastaleeq_1777800067919.ttf") format("truetype");
+  font-display: swap;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -59,7 +65,6 @@
   --elevate-1: rgba(0,0,0, .03);
   --elevate-2: rgba(0,0,0, .08);
 
-  /* Deep Blues and Warm Gold */
   --background: 210 40% 98%;
   --foreground: 222 47% 11%;
   
@@ -73,10 +78,10 @@
   --popover-foreground: 222 47% 11%;
   --popover-border: 214 32% 91%;
   
-  --primary: 221 83% 30%; /* Deep Scholarly Blue */
+  --primary: 221 83% 30%;
   --primary-foreground: 210 40% 98%;
   
-  --secondary: 43 74% 49%; /* Warm Gold */
+  --secondary: 43 74% 49%;
   --secondary-foreground: 222 47% 11%;
   
   --muted: 210 40% 96%;
@@ -93,6 +98,7 @@
 
   --app-font-sans: 'Plus Jakarta Sans', sans-serif;
   --app-font-serif: 'Lora', serif;
+  --app-font-urdu: 'Jameel Noori Nastaleeq', serif;
   --radius: 0.5rem;
 
   --sidebar: 210 40% 98%;
@@ -159,8 +165,13 @@
   body {
     @apply font-sans antialiased bg-background text-foreground selection:bg-secondary selection:text-secondary-foreground;
   }
-  
   h1, h2, h3, h4, h5, h6 {
     @apply font-serif tracking-tight text-primary;
+  }
+  [dir="rtl"], [dir="rtl"] * {
+    font-family: var(--app-font-urdu);
+  }
+  html[lang="ur"] body {
+    font-family: var(--app-font-urdu);
   }
 }
