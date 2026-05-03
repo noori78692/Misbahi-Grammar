@@ -1,5 +1,5 @@
 import { Volume2, VolumeX, Loader2 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type State = "idle" | "loading" | "playing";
 
@@ -10,8 +10,19 @@ type Props = {
 
 export default function AudioButton({ text, size = "sm" }: Props) {
   const [state, setState] = useState<State>("idle");
+  const cancelledRef = useRef(false);
+  const timeoutRef = useRef<number | null>(null);
 
-  function doSpeak(voices: SpeechSynthesisVoice[]) {
+  useEffect(() => {
+    return () => {
+      cancelledRef.current = true;
+      if (timeoutRef.current) window.clearTimeout(timeoutRef.current);
+      window.speechSynthesis.cancel();
+    };
+  }, []);
+
+  function doSpeak() {
+    const voices = window.speechSynthesis.getVoices();
     const utter = new SpeechSynthesisUtterance(text);
     utter.lang = "en-US";
     utter.rate = 0.88;
@@ -35,10 +46,7 @@ export default function AudioButton({ text, size = "sm" }: Props) {
 
     utter.onstart = () => setState("playing");
     utter.onend = () => setState("idle");
-    utter.onerror = (e) => {
-      console.warn("TTS error:", e.error);
-      setState("idle");
-    };
+    utter.onerror = () => setState("idle");
 
     window.speechSynthesis.speak(utter);
   }
@@ -47,46 +55,44 @@ export default function AudioButton({ text, size = "sm" }: Props) {
     if (!("speechSynthesis" in window)) return;
 
     if (state === "playing") {
+      cancelledRef.current = true;
       window.speechSynthesis.cancel();
       setState("idle");
       return;
     }
 
-    // Cancel any previous utterance first
+    cancelledRef.current = false;
+    if (timeoutRef.current) window.clearTimeout(timeoutRef.current);
     window.speechSynthesis.cancel();
     setState("loading");
 
+    const startSpeaking = () => {
+      if (cancelledRef.current) return;
+      doSpeak();
+    };
+
     const voices = window.speechSynthesis.getVoices();
-
     if (voices.length > 0) {
-      doSpeak(voices);
-    } else {
-      // Chrome/Chromium: voices load asynchronously — wait for the event
-      const handler = () => {
-        window.speechSynthesis.removeEventListener("voiceschanged", handler);
-        doSpeak(window.speechSynthesis.getVoices());
-      };
-      window.speechSynthesis.addEventListener("voiceschanged", handler);
-
-      // Trigger voice loading (some browsers need this nudge)
-      window.speechSynthesis.getVoices();
-
-      // Safety timeout: speak anyway after 2 s even without a preferred voice
-      setTimeout(() => {
-        const v = window.speechSynthesis.getVoices();
-        if (v.length > 0) return; // handler already fired
-        window.speechSynthesis.removeEventListener("voiceschanged", handler);
-        doSpeak([]);
-      }, 2000);
+      startSpeaking();
+      return;
     }
+
+    const handler = () => {
+      window.speechSynthesis.removeEventListener("voiceschanged", handler);
+      startSpeaking();
+    };
+
+    window.speechSynthesis.addEventListener("voiceschanged", handler);
+    timeoutRef.current = window.setTimeout(() => {
+      window.speechSynthesis.removeEventListener("voiceschanged", handler);
+      startSpeaking();
+    }, 1200);
   }
 
   const sizeClass =
     size === "md" ? "px-3 py-1.5 text-xs gap-1.5" : "px-2 py-1 text-xs gap-1";
   const iconSize = size === "md" ? "w-3.5 h-3.5" : "w-3 h-3";
-
-  const label =
-    state === "playing" ? "Stop" : state === "loading" ? "…" : "Listen";
+  const label = state === "playing" ? "Stop" : state === "loading" ? "..." : "Listen";
 
   return (
     <button
