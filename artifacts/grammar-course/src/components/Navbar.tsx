@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { BookOpen, Menu, X, Moon, Sun, Languages } from "lucide-react";
+import { Menu, X, Moon, Sun, Languages } from "lucide-react";
 import { useState } from "react";
 import { useLanguage } from "@/contexts/language";
 import { useTheme } from "@/contexts/theme";
@@ -20,10 +20,13 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/95 backdrop-blur-sm">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-        {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5 group flex-shrink-0">
-          <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
-            <BookOpen className="w-4 h-4 text-primary-foreground" />
+          <div className="w-9 h-9 rounded-full overflow-hidden bg-white shadow-sm group-hover:shadow-md transition-shadow border border-border/40">
+            <img
+              src="@assets/ChatGPT_Image_May_3,_2026,_02_57_19_PM_1777800458940.png"
+              alt="Misbahi Grammar logo"
+              className="w-full h-full object-cover"
+            />
           </div>
           <div className="flex flex-col leading-none">
             <span className="font-serif font-bold text-primary text-base tracking-tight">Misbahi Grammar</span>
