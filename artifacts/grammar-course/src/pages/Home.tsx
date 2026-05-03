@@ -59,25 +59,23 @@ export default function Home() {
         <div className="max-w-md mx-auto">
           <div className="rounded-[2rem] bg-gradient-to-br from-primary via-blue-800 to-indigo-950 text-white p-5 shadow-2xl overflow-hidden relative">
             <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-white/10 blur-3xl" />
-            <div className="relative z-10 text-center">
-              <div className="flex flex-col items-center gap-3 mb-4">
-                <div className="w-12 h-12 rounded-2xl bg-white/15 border border-white/10 flex items-center justify-center">
-                  <BookOpen className="w-6 h-6" />
-                </div>
-                <div className="text-center">
-                  <p className="text-white/70 text-xs font-medium uppercase tracking-[0.2em]">{t("nav.tagline")}</p>
-                  <h1 className="text-2xl font-bold mt-1">{t("home.hero.title1")}</h1>
-                </div>
+            <div className="relative z-10 text-center flex flex-col items-center">
+              <div className="w-12 h-12 rounded-2xl bg-white/15 border border-white/10 flex items-center justify-center mb-3">
+                <BookOpen className="w-6 h-6" />
               </div>
+              <p className="text-white/70 text-xs font-medium uppercase tracking-[0.2em]">{t("nav.tagline")}</p>
+              <h1 className="text-2xl font-bold mt-1 max-w-[14ch] mx-auto">{t("home.hero.title1")}</h1>
               <p className="text-white/80 text-sm leading-6">{t("home.hero.desc")}</p>
-              <div className="mt-5 flex flex-col sm:flex-row items-center justify-center gap-3 w-full mx-auto">
-                <Link href="/levels" className="w-full sm:w-auto inline-flex items-center justify-center text-center gap-2 px-4 py-3 rounded-2xl bg-secondary text-secondary-foreground font-semibold shadow-lg">
-                  {t("home.cta.start")}
-                  <ChevronRight className="w-4 h-4" />
-                </Link>
-                <Link href="/level/beginner/lessons" className="w-full sm:w-auto inline-flex items-center justify-center text-center gap-2 px-4 py-3 rounded-2xl bg-white/10 border border-white/20 text-white font-semibold shadow-lg">
-                  {t("home.cta.begin")}
-                </Link>
+              <div className="mt-5 w-full flex justify-center">
+                <div className="flex flex-col gap-3 w-full max-w-[260px]">
+                  <Link href="/levels" className="w-full inline-flex items-center justify-center text-center gap-2 px-4 py-3 rounded-2xl bg-secondary text-secondary-foreground font-semibold shadow-lg">
+                    {t("home.cta.start")}
+                    <ChevronRight className="w-4 h-4" />
+                  </Link>
+                  <Link href="/level/beginner/lessons" className="w-full inline-flex items-center justify-center text-center gap-2 px-4 py-3 rounded-2xl bg-white/10 border border-white/20 text-white font-semibold shadow-lg">
+                    {t("home.cta.begin")}
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
