@@ -70,12 +70,12 @@ export default function Home() {
                 </div>
               </div>
               <p className="text-white/80 text-sm leading-6">{t("home.hero.desc")}</p>
-              <div className="mt-5 flex flex-col sm:flex-row items-center justify-center gap-3">
-                <Link href="/levels" className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-2xl bg-secondary text-secondary-foreground font-semibold shadow-lg">
+              <div className="mt-5 flex flex-col sm:flex-row items-center justify-center gap-3 w-full">
+                <Link href="/levels" className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-3 rounded-2xl bg-secondary text-secondary-foreground font-semibold shadow-lg">
                   {t("home.cta.start")}
                   <ChevronRight className="w-4 h-4" />
                 </Link>
-                <Link href="/level/beginner/lessons" className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-2xl bg-white/10 border border-white/20 text-white font-semibold shadow-lg">
+                <Link href="/level/beginner/lessons" className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-3 rounded-2xl bg-white/10 border border-white/20 text-white font-semibold shadow-lg">
                   {t("home.cta.begin")}
                 </Link>
               </div>
