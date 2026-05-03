@@ -1,0 +1,42 @@
+{
+  "name": "Misbahi Grammar",
+  "short_name": "Misbahi",
+  "description": "English Grammar Course for Urdu Speakers",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#1e40af",
+  "orientation": "portrait-primary",
+  "lang": "en-US",
+  "scope": "/",
+  "categories": ["education"],
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Lessons",
+      "short_name": "Lessons",
+      "description": "Go to Grammar Lessons",
+      "url": "/lessons"
+    },
+    {
+      "name": "Quiz",
+      "short_name": "Quiz",
+      "description": "Take a Grammar Quiz",
+      "url": "/quiz"
+    }
+  ]
+}
