@@ -60,8 +60,8 @@ export default function Home() {
           <div className="rounded-[2rem] bg-gradient-to-br from-primary via-blue-800 to-indigo-950 text-white p-5 shadow-2xl overflow-hidden relative">
             <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-white/10 blur-3xl" />
             <div className="relative z-10 text-center">
-              <div className="flex items-center justify-between mb-4">
-                <div>
+              <div className="flex flex-col items-center gap-3 mb-4 sm:flex-row sm:items-start sm:justify-between sm:gap-0">
+                <div className="text-center sm:text-left">
                   <p className="text-white/70 text-xs font-medium uppercase tracking-[0.2em]">{t("nav.tagline")}</p>
                   <h1 className="text-2xl font-bold mt-1">{t("home.hero.title1")}</h1>
                 </div>
