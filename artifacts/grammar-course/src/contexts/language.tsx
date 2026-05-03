@@ -15,6 +15,7 @@ const translations: Record<string, Record<Language, string>> = {
   "nav.startLearning": { en: "Start Learning", ur: "سیکھنا شروع کریں" },
   "nav.tagline": { en: "Urdu to English", ur: "اردو سے انگریزی" },
   "nav.confusables": { en: "Similar Words", ur: "ملتے جلتے الفاظ" },
+  "nav.translator": { en: "Translator", ur: "ترجمہ" },
 
   // Home
   "home.badge": { en: "Complete Grammar Course — Basic to Advanced", ur: "مکمل گرامر کورس — بنیادی سے اعلیٰ درجے تک" },

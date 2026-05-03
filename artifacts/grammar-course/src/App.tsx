@@ -11,6 +11,7 @@ import LessonsList from "@/pages/LessonsList";
 import LessonPage from "@/pages/LessonPage";
 import QuizPage from "@/pages/QuizPage";
 import ConfusablesPage from "@/pages/ConfusablesPage";
+import TranslatorPage from "@/pages/TranslatorPage";
 import NotFound from "@/pages/not-found";
 
 const queryClient = new QueryClient();
@@ -26,6 +27,7 @@ function Router() {
         <Route path="/level/:level/lesson/:id" component={LessonPage} />
         <Route path="/quiz/:level" component={QuizPage} />
         <Route path="/confusables" component={ConfusablesPage} />
+        <Route path="/translator" component={TranslatorPage} />
         <Route component={NotFound} />
       </Switch>
     </>

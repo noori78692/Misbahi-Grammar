@@ -2,6 +2,7 @@ import { useParams, Link } from "wouter";
 import { useState } from "react";
 import { ChevronRight, ChevronLeft, CheckCircle2, XCircle, BookOpen, ArrowRight } from "lucide-react";
 import { getLessonById, getAdjacentLessons } from "@/data/lessons";
+import { lessonUrduRules } from "@/data/lessonUrduRules";
 import { useProgress } from "@/hooks/use-progress";
 import { useLanguage } from "@/contexts/language";
 import AudioButton from "@/components/AudioButton";
@@ -108,20 +109,34 @@ export default function LessonPage() {
 
         {/* Grammar Rule */}
         <section className="rounded-2xl border border-border bg-card p-6 md:p-8">
-          <div className="flex items-center gap-2 mb-2">
+          <div className="flex items-center gap-2 mb-4">
             <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
               <BookOpen className="w-4 h-4 text-primary" />
             </div>
             <h2 className="font-serif text-xl font-bold text-primary">{t("lesson.rule")}</h2>
           </div>
-          {lang === "ur" && (
-            <p className="text-sm text-muted-foreground mb-4 font-medium" dir="rtl" style={{ textAlign: "right" }}>
-              گرامر کا قاعدہ — {lesson.title}
-            </p>
-          )}
-          <div className="text-sm md:text-base leading-7 text-foreground/90 space-y-1">
+
+          {/* English rule */}
+          <div className="text-sm md:text-base leading-7 text-foreground/90 space-y-1 mb-6">
             {renderRule(lesson.rule)}
           </div>
+
+          {/* Urdu rule — always shown below English for bilingual learning */}
+          {lessonUrduRules[lesson.id] && (
+            <div className="border-t border-border pt-5 mt-2">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="text-xs font-bold text-primary/70 uppercase tracking-widest">اردو وضاحت</span>
+                <div className="flex-1 h-px bg-border/60" />
+              </div>
+              <div
+                className="text-sm md:text-base leading-8 text-foreground/85 space-y-1 bg-primary/5 rounded-xl p-4 border border-primary/10"
+                dir="rtl"
+                style={{ textAlign: "right", fontFamily: "'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif" }}
+              >
+                {renderRule(lessonUrduRules[lesson.id])}
+              </div>
+            </div>
+          )}
         </section>
 
         {/* Examples */}

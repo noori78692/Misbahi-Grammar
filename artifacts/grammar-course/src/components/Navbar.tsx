@@ -14,6 +14,7 @@ export default function Navbar() {
     { href: "/", labelKey: "nav.home" },
     { href: "/levels", labelKey: "nav.levels" },
     { href: "/confusables", labelKey: "nav.confusables" },
+    { href: "/translator", labelKey: "nav.translator" },
   ];
 
   return (

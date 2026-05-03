@@ -48,7 +48,7 @@ export default function Levels() {
             const total = levelLessons.length;
             const progressPct = total > 0 ? Math.round((completed / total) * 100) : 0;
             const colors = levelColors[level.id];
-            const isLocked = i > 0 && getCompletedCount(levels[i - 1].id) < 1;
+            const isLocked = false; // All levels are unlocked
 
             const titleEn = level.title;
             const titleUr = levelTitleUrdu[level.id];
