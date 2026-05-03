@@ -10,25 +10,32 @@ type Props = {
 
 export default function AudioButton({ text, size = "sm" }: Props) {
   const [state, setState] = useState<State>("idle");
-  const cancelledRef = useRef(false);
-  const timeoutRef = useRef<number | null>(null);
+  const utterRef = useRef<SpeechSynthesisUtterance | null>(null);
 
   useEffect(() => {
     return () => {
-      cancelledRef.current = true;
-      if (timeoutRef.current) window.clearTimeout(timeoutRef.current);
-      window.speechSynthesis.cancel();
+      window.speechSynthesis?.cancel();
     };
   }, []);
 
-  function doSpeak() {
-    const voices = window.speechSynthesis.getVoices();
+  function speak() {
+    if (!("speechSynthesis" in window)) return;
+
+    if (state === "playing") {
+      window.speechSynthesis.cancel();
+      setState("idle");
+      return;
+    }
+
+    window.speechSynthesis.cancel();
+
     const utter = new SpeechSynthesisUtterance(text);
     utter.lang = "en-US";
     utter.rate = 0.88;
     utter.pitch = 1;
     utter.volume = 1;
 
+    const voices = window.speechSynthesis.getVoices();
     const preferred =
       voices.find(
         (v) =>
@@ -48,57 +55,32 @@ export default function AudioButton({ text, size = "sm" }: Props) {
     utter.onend = () => setState("idle");
     utter.onerror = () => setState("idle");
 
-    window.speechSynthesis.speak(utter);
-  }
+    utterRef.current = utter;
 
-  function speak() {
-    if (!("speechSynthesis" in window)) return;
-
-    if (state === "playing") {
-      cancelledRef.current = true;
-      window.speechSynthesis.cancel();
-      setState("idle");
-      return;
-    }
-
-    cancelledRef.current = false;
-    if (timeoutRef.current) window.clearTimeout(timeoutRef.current);
-    window.speechSynthesis.cancel();
     setState("loading");
 
-    const startSpeaking = () => {
-      if (cancelledRef.current) return;
-      doSpeak();
+    window.speechSynthesis.speak(utter);
+
+    const checkStarted = window.setTimeout(() => {
+      if (state !== "playing") setState("playing");
+    }, 300);
+
+    utter.onstart = () => {
+      window.clearTimeout(checkStarted);
+      setState("playing");
     };
-
-    const voices = window.speechSynthesis.getVoices();
-    if (voices.length > 0) {
-      startSpeaking();
-      return;
-    }
-
-    const handler = () => {
-      window.speechSynthesis.removeEventListener("voiceschanged", handler);
-      startSpeaking();
-    };
-
-    window.speechSynthesis.addEventListener("voiceschanged", handler);
-    timeoutRef.current = window.setTimeout(() => {
-      window.speechSynthesis.removeEventListener("voiceschanged", handler);
-      startSpeaking();
-    }, 1200);
   }
 
   const sizeClass =
     size === "md" ? "px-3 py-1.5 text-xs gap-1.5" : "px-2 py-1 text-xs gap-1";
   const iconSize = size === "md" ? "w-3.5 h-3.5" : "w-3 h-3";
-  const label = state === "playing" ? "Stop" : state === "loading" ? "..." : "Listen";
+  const label =
+    state === "playing" ? "Stop" : state === "loading" ? "..." : "Listen";
 
   return (
     <button
       onClick={speak}
       title="Listen to pronunciation"
-      disabled={state === "loading"}
       className={`inline-flex items-center rounded-lg border font-medium transition-all ${sizeClass} ${
         state === "playing"
           ? "border-primary bg-primary text-primary-foreground shadow-sm"
