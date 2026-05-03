@@ -5,8 +5,8 @@
 @plugin "@tailwindcss/typography";
 
 @font-face {
-  font-family: "Jameel Noori Nastaleeq";
-  src: url("@assets/Jameel_Noori_Nastaleeq_1777800067919.ttf") format("truetype");
+  font-family: "AppFont";
+  src: url("@assets/Noori_Regular_1777803307583.ttf") format("truetype");
   font-display: swap;
 }
 
@@ -96,9 +96,9 @@
   --input: 214 32% 91%;
   --ring: 221 83% 30%;
 
-  --app-font-sans: "Plus Jakarta Sans", "Inter", sans-serif;
-  --app-font-serif: "Lora", "Georgia", serif;
-  --app-font-urdu: "Jameel Noori Nastaleeq", serif;
+  --app-font-sans: "AppFont", sans-serif;
+  --app-font-serif: "AppFont", sans-serif;
+  --app-font-urdu: "AppFont", sans-serif;
   --radius: 0.5rem;
 
   --sidebar: 210 40% 98%;
@@ -178,11 +178,6 @@
   li,
   div {
     font-family: var(--app-font-sans);
-  }
-  [dir="rtl"],
-  [lang="ur"],
-  .urdu {
-    font-family: var(--app-font-urdu);
   }
   h1, h2, h3, h4, h5, h6,
   .font-serif {
