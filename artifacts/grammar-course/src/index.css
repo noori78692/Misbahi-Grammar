@@ -96,9 +96,9 @@
   --input: 214 32% 91%;
   --ring: 221 83% 30%;
 
-  --app-font-sans: 'Plus Jakarta Sans', sans-serif;
-  --app-font-serif: 'Lora', serif;
-  --app-font-urdu: 'Jameel Noori Nastaleeq', serif;
+  --app-font-sans: "Jameel Noori Nastaleeq", serif;
+  --app-font-serif: "Jameel Noori Nastaleeq", serif;
+  --app-font-urdu: "Jameel Noori Nastaleeq", serif;
   --radius: 0.5rem;
 
   --sidebar: 210 40% 98%;
@@ -163,15 +163,24 @@
     @apply border-border;
   }
   body {
-    @apply font-sans antialiased bg-background text-foreground selection:bg-secondary selection:text-secondary-foreground;
+    font-family: var(--app-font-sans);
+    @apply antialiased bg-background text-foreground selection:bg-secondary selection:text-secondary-foreground;
   }
   h1, h2, h3, h4, h5, h6 {
-    @apply font-serif tracking-tight text-primary;
+    font-family: var(--app-font-serif);
+    @apply tracking-tight text-primary;
   }
-  [dir="rtl"], [dir="rtl"] * {
-    font-family: var(--app-font-urdu);
-  }
-  html[lang="ur"] body {
-    font-family: var(--app-font-urdu);
+  button,
+  input,
+  textarea,
+  select,
+  option,
+  label,
+  p,
+  span,
+  a,
+  li,
+  div {
+    font-family: inherit;
   }
 }
