@@ -3,6 +3,7 @@ import { Menu, X, Moon, Sun, Languages } from "lucide-react";
 import { useState } from "react";
 import { useLanguage } from "@/contexts/language";
 import { useTheme } from "@/contexts/theme";
+import logoImage from "@assets/ChatGPT_Image_May_3,_2026,_02_57_19_PM_1777800458940.png";
 
 export default function Navbar() {
   const [location] = useLocation();
@@ -23,7 +24,7 @@ export default function Navbar() {
         <Link href="/" className="flex items-center gap-2.5 group flex-shrink-0">
           <div className="w-9 h-9 rounded-full overflow-hidden bg-white shadow-sm group-hover:shadow-md transition-shadow border border-border/40">
             <img
-              src="@assets/ChatGPT_Image_May_3,_2026,_02_57_19_PM_1777800458940.png"
+              src={logoImage}
               alt="Misbahi Grammar logo"
               className="w-full h-full object-cover"
             />
