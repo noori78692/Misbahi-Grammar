@@ -6,12 +6,12 @@ export default function Home() {
   const { t } = useLanguage();
 
   const features = [
-    { icon: Layers, titleKey: "feature.levels.title", descKey: "feature.levels.desc" },
-    { icon: Languages, titleKey: "feature.urdu.title", descKey: "feature.urdu.desc" },
-    { icon: CheckCircle2, titleKey: "feature.quiz.title", descKey: "feature.quiz.desc" },
-    { icon: GraduationCap, titleKey: "feature.exam.title", descKey: "feature.exam.desc" },
-    { icon: Star, titleKey: "feature.progress.title", descKey: "feature.progress.desc" },
-    { icon: BookOpen, titleKey: "feature.lessons.title", descKey: "feature.lessons.desc" },
+    { icon: Layers, titleKey: "feature.levels.title", descKey: "feature.levels.desc", href: "/levels" },
+    { icon: Languages, titleKey: "feature.urdu.title", descKey: "feature.urdu.desc", href: "/translator" },
+    { icon: CheckCircle2, titleKey: "feature.quiz.title", descKey: "feature.quiz.desc", href: "/levels" },
+    { icon: GraduationCap, titleKey: "feature.exam.title", descKey: "feature.exam.desc", href: "/levels" },
+    { icon: Star, titleKey: "feature.progress.title", descKey: "feature.progress.desc", href: "/levels" },
+    { icon: BookOpen, titleKey: "feature.lessons.title", descKey: "feature.lessons.desc", href: "/levels" },
   ];
 
   const topics = [
@@ -118,13 +118,13 @@ export default function Home() {
           </div>
           <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
             {features.map((f) => (
-              <div key={f.titleKey} className="group p-6 rounded-2xl border border-border bg-card hover:border-primary/30 hover:shadow-md transition-all duration-200">
+              <Link key={f.titleKey} href={f.href} className="group p-6 rounded-2xl border border-border bg-card hover:border-primary/30 hover:shadow-md transition-all duration-200 block">
                 <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
                   <f.icon className="w-5 h-5 text-primary" />
                 </div>
                 <h3 className="font-serif font-semibold text-primary text-base mb-2">{t(f.titleKey)}</h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">{t(f.descKey)}</p>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
@@ -139,7 +139,7 @@ export default function Home() {
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {topics.map((top) => (
-              <div key={top.levelKey} className="rounded-2xl bg-card border border-border overflow-hidden hover:shadow-md transition-all duration-200">
+              <Link key={top.levelKey} href={`/level/${top.levelKey.split(".")[1]}/lessons`} className="rounded-2xl bg-card border border-border overflow-hidden hover:shadow-md transition-all duration-200 block">
                 <div
                   className={`px-6 py-4 font-serif text-lg font-bold ${
                     top.color === "blue"
@@ -162,7 +162,7 @@ export default function Home() {
                     </li>
                   ))}
                 </ul>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
