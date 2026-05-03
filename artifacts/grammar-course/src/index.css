@@ -166,10 +166,6 @@
     font-family: var(--app-font-sans);
     @apply antialiased bg-background text-foreground selection:bg-secondary selection:text-secondary-foreground;
   }
-  h1, h2, h3, h4, h5, h6 {
-    font-family: var(--app-font-serif);
-    @apply tracking-tight text-primary;
-  }
   button,
   input,
   textarea,
@@ -187,5 +183,10 @@
   [lang="ur"],
   .urdu {
     font-family: var(--app-font-urdu);
+  }
+  h1, h2, h3, h4, h5, h6,
+  .font-serif {
+    font-family: var(--app-font-sans);
+    @apply tracking-tight text-primary;
   }
 }
