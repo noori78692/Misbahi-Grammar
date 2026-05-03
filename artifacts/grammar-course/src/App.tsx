@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { LanguageProvider } from "@/contexts/language";
 import { ThemeProvider } from "@/contexts/theme";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import Home from "@/pages/Home";
 import Levels from "@/pages/Levels";
 import LessonsList from "@/pages/LessonsList";
@@ -41,7 +42,10 @@ function App() {
         <QueryClientProvider client={queryClient}>
           <TooltipProvider>
             <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-              <Router />
+              <div className="min-h-screen flex flex-col">
+                <Router />
+                <Footer />
+              </div>
             </WouterRouter>
             <Toaster />
           </TooltipProvider>
