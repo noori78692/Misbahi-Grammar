@@ -67,12 +67,12 @@ export default function Home() {
               <h1 className="text-2xl font-bold mt-1 max-w-[14ch] mx-auto">{t("home.hero.title1")}</h1>
               <p className="text-white/80 text-sm leading-6">{t("home.hero.desc")}</p>
               <div className="mt-5 w-full flex justify-center">
-                <div className="flex flex-col gap-3 w-full max-w-[260px]">
-                  <Link href="/levels" className="w-full inline-flex items-center justify-center text-center gap-2 px-4 py-3 rounded-2xl bg-secondary text-secondary-foreground font-semibold shadow-lg">
+                <div className="flex flex-col items-stretch gap-3 w-full max-w-[260px] mx-auto">
+                  <Link href="/levels" className="w-full flex items-center justify-center text-center gap-2 px-4 py-3 rounded-2xl bg-secondary text-secondary-foreground font-semibold shadow-lg">
                     {t("home.cta.start")}
                     <ChevronRight className="w-4 h-4" />
                   </Link>
-                  <Link href="/level/beginner/lessons" className="w-full inline-flex items-center justify-center text-center gap-2 px-4 py-3 rounded-2xl bg-white/10 border border-white/20 text-white font-semibold shadow-lg">
+                  <Link href="/level/beginner/lessons" className="w-full flex items-center justify-center text-center gap-2 px-4 py-3 rounded-2xl bg-white/10 border border-white/20 text-white font-semibold shadow-lg">
                     {t("home.cta.begin")}
                   </Link>
                 </div>
