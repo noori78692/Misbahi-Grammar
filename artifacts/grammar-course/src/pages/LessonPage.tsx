@@ -109,11 +109,15 @@ export default function LessonPage() {
 
         {/* Grammar Rule */}
         <section className="rounded-2xl border border-border bg-card p-6 md:p-8">
-          <div className="flex items-center gap-2 mb-4">
-            <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+          {/* Bilingual heading — always shown */}
+          <div className="flex items-center gap-3 mb-5">
+            <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
               <BookOpen className="w-4 h-4 text-primary" />
             </div>
-            <h2 className="font-serif text-xl font-bold text-primary">{t("lesson.rule")}</h2>
+            <div>
+              <h2 className="font-serif text-xl font-bold text-primary leading-tight">Grammar Rule</h2>
+              <p className="text-sm text-primary/70 font-semibold leading-tight mt-0.5" dir="rtl">گرامر کا قاعدہ</p>
+            </div>
           </div>
 
           {/* English rule */}
@@ -121,17 +125,18 @@ export default function LessonPage() {
             {renderRule(lesson.rule)}
           </div>
 
-          {/* Urdu rule — always shown below English for bilingual learning */}
+          {/* Urdu rule — always shown */}
           {lessonUrduRules[lesson.id] && (
-            <div className="border-t border-border pt-5 mt-2">
+            <div className="border-t border-border pt-5">
               <div className="flex items-center gap-2 mb-3">
-                <span className="text-xs font-bold text-primary/70 uppercase tracking-widest">اردو وضاحت</span>
-                <div className="flex-1 h-px bg-border/60" />
+                <span className="text-xs font-bold text-primary/60 tracking-widest">——</span>
+                <p className="text-sm font-bold text-primary" dir="rtl">اردو وضاحت</p>
+                <span className="text-xs font-bold text-primary/60 tracking-widest">——</span>
               </div>
               <div
-                className="text-sm md:text-base leading-8 text-foreground/85 space-y-1 bg-primary/5 rounded-xl p-4 border border-primary/10"
+                className="text-sm md:text-base leading-9 text-foreground/85 bg-primary/5 rounded-xl p-5 border border-primary/10"
                 dir="rtl"
-                style={{ textAlign: "right", fontFamily: "'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif" }}
+                style={{ textAlign: "right" }}
               >
                 {renderRule(lessonUrduRules[lesson.id])}
               </div>
@@ -141,11 +146,11 @@ export default function LessonPage() {
 
         {/* Examples */}
         <section className="rounded-2xl border border-border bg-card p-6 md:p-8">
-          <h2 className="font-serif text-xl font-bold text-primary mb-1">{t("lesson.examples")}</h2>
-          {lang === "ur" && (
-            <p className="text-sm text-muted-foreground mb-5" dir="rtl" style={{ textAlign: "right" }}>اردو ترجمے کے ساتھ مثالیں</p>
-          )}
-          {lang === "en" && <div className="mb-5" />}
+          {/* Bilingual heading */}
+          <div className="mb-5">
+            <h2 className="font-serif text-xl font-bold text-primary leading-tight">Examples</h2>
+            <p className="text-sm text-primary/70 font-semibold mt-0.5" dir="rtl">اردو ترجمے کے ساتھ مثالیں</p>
+          </div>
           <div className="space-y-4">
             {lesson.examples.map((ex, i) => (
               <div key={i} className="p-4 rounded-xl bg-muted/40 border border-border/60">
@@ -170,18 +175,18 @@ export default function LessonPage() {
 
         {/* Quiz */}
         <section className="rounded-2xl border border-border bg-card p-6 md:p-8">
-          <div className="flex items-center justify-between mb-2">
-            <h2 className="font-serif text-xl font-bold text-primary">{t("lesson.quiz")}</h2>
+          {/* Bilingual heading */}
+          <div className="flex items-start justify-between mb-5">
+            <div>
+              <h2 className="font-serif text-xl font-bold text-primary leading-tight">Practice Quiz</h2>
+              <p className="text-sm text-primary/70 font-semibold mt-0.5" dir="rtl">مشق کا کوئز</p>
+            </div>
             {submitted && (
-              <span className={`text-sm font-semibold px-3 py-1 rounded-full ${score === lesson.quiz.length ? "bg-emerald-100 text-emerald-700" : "bg-orange-100 text-orange-700"}`}>
+              <span className={`text-sm font-semibold px-3 py-1 rounded-full flex-shrink-0 ${score === lesson.quiz.length ? "bg-emerald-100 text-emerald-700" : "bg-orange-100 text-orange-700"}`}>
                 {score}/{lesson.quiz.length} {t("lesson.correct.count")}
               </span>
             )}
           </div>
-          {lang === "ur" && (
-            <p className="text-sm text-muted-foreground mb-6" dir="rtl" style={{ textAlign: "right" }}>مشق کا کوئز</p>
-          )}
-          {lang === "en" && <div className="mb-6" />}
 
           <div className="space-y-6">
             {lesson.quiz.map((q, qi) => {
