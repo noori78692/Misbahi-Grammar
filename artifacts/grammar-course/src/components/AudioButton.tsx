@@ -36,6 +36,7 @@ export default function AudioButton({ text, size = "sm" }: Props) {
     utter.volume = 1;
 
     const voices = window.speechSynthesis.getVoices();
+
     const preferred =
       voices.find(
         (v) =>
@@ -49,33 +50,49 @@ export default function AudioButton({ text, size = "sm" }: Props) {
             v.name.includes("Zira"))
       ) || voices.find((v) => v.lang.startsWith("en"));
 
-    if (preferred) utter.voice = preferred;
-
-    utter.onstart = () => setState("playing");
-    utter.onend = () => setState("idle");
-    utter.onerror = () => setState("idle");
+    if (preferred) {
+      utter.voice = preferred;
+    }
 
     utterRef.current = utter;
 
     setState("loading");
 
-    window.speechSynthesis.speak(utter);
-
     const checkStarted = window.setTimeout(() => {
-      if (state !== "playing") setState("playing");
+      setState("playing");
     }, 300);
 
     utter.onstart = () => {
       window.clearTimeout(checkStarted);
       setState("playing");
     };
+
+    utter.onend = () => {
+      window.clearTimeout(checkStarted);
+      setState("idle");
+    };
+
+    utter.onerror = () => {
+      window.clearTimeout(checkStarted);
+      setState("idle");
+    };
+
+    window.speechSynthesis.speak(utter);
   }
 
   const sizeClass =
-    size === "md" ? "px-3 py-1.5 text-xs gap-1.5" : "px-2 py-1 text-xs gap-1";
+    size === "md"
+      ? "px-3 py-1.5 text-xs gap-1.5"
+      : "px-2 py-1 text-xs gap-1";
+
   const iconSize = size === "md" ? "w-3.5 h-3.5" : "w-3 h-3";
+
   const label =
-    state === "playing" ? "Stop" : state === "loading" ? "..." : "Listen";
+    state === "playing"
+      ? "Stop"
+      : state === "loading"
+      ? "..."
+      : "Listen";
 
   return (
     <button
@@ -96,6 +113,7 @@ export default function AudioButton({ text, size = "sm" }: Props) {
       ) : (
         <Volume2 className={iconSize} />
       )}
+
       <span>{label}</span>
     </button>
   );
