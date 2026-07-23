@@ -39,35 +39,29 @@ function Router() {
   );
 }
 
-function App() {
+function AppContent() {
   const [location] = useLocation();
 
   useEffect(() => {
-    if (!Capacitor.isNativePlatform()) return;
-
-    const listener = CapacitorApp.addListener("backButton", () => {
-      if (window.history.length > 1 && location !== "/") {
-        window.history.back();
-      } else {
-        CapacitorApp.exitApp();
-      }
-    });
-
-    return () => {
-      listener.then((l) => l.remove());
-    };
+    // Back button logic
   }, [location]);
 
+  return (
+    <div className="min-h-screen flex flex-col">
+      <Router />
+      <Footer />
+    </div>
+  );
+}
+
+function App() {
   return (
     <ThemeProvider>
       <LanguageProvider>
         <QueryClientProvider client={queryClient}>
           <TooltipProvider>
             <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-              <div className="min-h-screen flex flex-col">
-                <Router />
-                <Footer />
-              </div>
+              <AppContent />
             </WouterRouter>
             <Toaster />
           </TooltipProvider>
