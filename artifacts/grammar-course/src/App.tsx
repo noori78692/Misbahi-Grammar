@@ -14,6 +14,10 @@ import QuizPage from "@/pages/QuizPage";
 import ConfusablesPage from "@/pages/ConfusablesPage";
 import TranslatorPage from "@/pages/TranslatorPage";
 import NotFound from "@/pages/not-found";
+import { useEffect } from "react";
+import { useLocation } from "wouter";
+import { Capacitor } from "@capacitor/core";
+import { App as CapacitorApp } from "@capacitor/app";
 
 const queryClient = new QueryClient();
 
