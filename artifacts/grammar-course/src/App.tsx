@@ -40,6 +40,24 @@ function Router() {
 }
 
 function App() {
+  const [location] = useLocation();
+
+  useEffect(() => {
+    if (!Capacitor.isNativePlatform()) return;
+
+    const listener = CapacitorApp.addListener("backButton", () => {
+      if (window.history.length > 1 && location !== "/") {
+        window.history.back();
+      } else {
+        CapacitorApp.exitApp();
+      }
+    });
+
+    return () => {
+      listener.then((l) => l.remove());
+    };
+  }, [location]);
+
   return (
     <ThemeProvider>
       <LanguageProvider>
