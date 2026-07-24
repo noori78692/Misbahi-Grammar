@@ -1,4 +1,4 @@
-name: Build Android APK
+name: Build Android
 
 on:
   workflow_dispatch:
@@ -16,6 +16,12 @@ jobs:
     defaults:
       run:
         working-directory: artifacts/grammar-course
+
+    env:
+      KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+      KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+      KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+      KEYSTORE_FILE: ${{ github.workspace }}/artifacts/grammar-course/android/app/misbahi-release.jks
 
     steps:
       - name: Checkout
@@ -48,12 +54,36 @@ jobs:
       - name: Sync Android
         run: pnpm exec cap sync android
 
+      - name: Restore Keystore
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/misbahi-release.jks
+
       - name: Build Debug APK
         working-directory: artifacts/grammar-course/android
         run: chmod +x gradlew && ./gradlew assembleDebug
 
-      - name: Upload APK
+      - name: Build Release APK
+        working-directory: artifacts/grammar-course/android
+        run: ./gradlew assembleRelease
+
+      - name: Build Release AAB
+        working-directory: artifacts/grammar-course/android
+        run: ./gradlew bundleRelease
+
+      - name: Upload Debug APK
         uses: actions/upload-artifact@v4
         with:
           name: app-debug
           path: artifacts/grammar-course/android/app/build/outputs/apk/debug/app-debug.apk
+
+      - name: Upload Release APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release
+          path: artifacts/grammar-course/android/app/build/outputs/apk/release/app-release.apk
+
+      - name: Upload Release AAB
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release-aab
+          path: artifacts/grammar-course/android/app/build/outputs/bundle/release/app-release.aab
