@@ -1,5 +1,7 @@
 import { Volume2, VolumeX, Loader2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { Capacitor } from "@capacitor/core";
+import { TextToSpeech } from "@capacitor-community/text-to-speech";
 
 type State = "idle" | "loading" | "playing";
 
@@ -8,21 +10,73 @@ type Props = {
   size?: "sm" | "md";
 };
 
-export default function AudioButton({ text, size = "sm" }: Props) {
+export default function AudioButton({
+  text,
+  size = "sm",
+}: Props) {
   const [state, setState] = useState<State>("idle");
+
   const utterRef = useRef<SpeechSynthesisUtterance | null>(null);
+
+  const isNative =
+    Capacitor.isNativePlatform() &&
+    Capacitor.getPlatform() === "android";
 
   useEffect(() => {
     return () => {
-      window.speechSynthesis?.cancel();
+      if (isNative) {
+        TextToSpeech.stop().catch(() => {});
+      } else {
+        window.speechSynthesis?.cancel();
+      }
     };
-  }, []);
+  }, [isNative]);
 
-  function speak() {
-    if (!("speechSynthesis" in window)) return;
+  async function speak() {
+    if (!text.trim()) return;
 
+    // STOP
     if (state === "playing") {
-      window.speechSynthesis.cancel();
+      if (isNative) {
+        await TextToSpeech.stop().catch(() => {});
+      } else {
+        window.speechSynthesis.cancel();
+      }
+
+      setState("idle");
+      return;
+    }
+
+    setState("loading");
+
+    // ==========================
+    // ANDROID (Native TTS)
+    // ==========================
+    if (isNative) {
+      try {
+        setState("playing");
+
+        await TextToSpeech.speak({
+          text,
+          lang: "en-US",
+          rate: 0.88,
+          pitch: 1.0,
+          volume: 1.0,
+        });
+
+        setState("idle");
+      } catch (err) {
+        console.error(err);
+        setState("idle");
+      }
+
+      return;
+    }
+
+    // ==========================
+    // WEB
+    // ==========================
+    if (!("speechSynthesis" in window)) {
       setState("idle");
       return;
     }
@@ -30,6 +84,7 @@ export default function AudioButton({ text, size = "sm" }: Props) {
     window.speechSynthesis.cancel();
 
     const utter = new SpeechSynthesisUtterance(text);
+
     utter.lang = "en-US";
     utter.rate = 0.88;
     utter.pitch = 1;
@@ -41,14 +96,17 @@ export default function AudioButton({ text, size = "sm" }: Props) {
       voices.find(
         (v) =>
           v.lang.startsWith("en") &&
-          (v.name.includes("Google") ||
+          (
+            v.name.includes("Google") ||
             v.name.includes("Natural") ||
             v.name.includes("Samantha") ||
             v.name.includes("Daniel") ||
             v.name.includes("Karen") ||
             v.name.includes("Alex") ||
-            v.name.includes("Zira"))
-      ) || voices.find((v) => v.lang.startsWith("en"));
+            v.name.includes("Zira")
+          )
+      ) ||
+      voices.find((v) => v.lang.startsWith("en"));
 
     if (preferred) {
       utter.voice = preferred;
@@ -56,24 +114,15 @@ export default function AudioButton({ text, size = "sm" }: Props) {
 
     utterRef.current = utter;
 
-    setState("loading");
-
-    const checkStarted = window.setTimeout(() => {
-      setState("playing");
-    }, 300);
-
     utter.onstart = () => {
-      window.clearTimeout(checkStarted);
       setState("playing");
     };
 
     utter.onend = () => {
-      window.clearTimeout(checkStarted);
       setState("idle");
     };
 
     utter.onerror = () => {
-      window.clearTimeout(checkStarted);
       setState("idle");
     };
 
@@ -85,7 +134,10 @@ export default function AudioButton({ text, size = "sm" }: Props) {
       ? "px-3 py-1.5 text-xs gap-1.5"
       : "px-2 py-1 text-xs gap-1";
 
-  const iconSize = size === "md" ? "w-3.5 h-3.5" : "w-3 h-3";
+  const iconSize =
+    size === "md"
+      ? "w-3.5 h-3.5"
+      : "w-3 h-3";
 
   const label =
     state === "playing"

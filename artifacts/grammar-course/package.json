@@ -81,6 +81,7 @@
     "zod": "catalog:"
   },
   "dependencies": {
+    "@capacitor-community/text-to-speech": "^8.0.2",
     "@capacitor/app": "^8.1.1",
     "zustand": "^5.0.12"
   }
