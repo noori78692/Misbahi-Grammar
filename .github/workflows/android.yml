@@ -55,8 +55,10 @@ jobs:
         run: pnpm exec cap sync android
 
       - name: Restore Keystore
-        run: |
-          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/misbahi-release.jks
+  shell: bash
+  run: |
+    printf '%s' '${{ secrets.KEYSTORE_BASE64 }}' | base64 -d > android/app/misbahi-release.jks
+    ls -lh android/app/misbahi-release.jks
 
       - name: Build Debug APK
         working-directory: artifacts/grammar-course/android
