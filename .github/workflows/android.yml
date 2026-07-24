@@ -31,7 +31,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: 21
+          java-version: "21"
 
       - name: Setup PNPM
         uses: pnpm/action-setup@v4
@@ -55,14 +55,22 @@ jobs:
         run: pnpm exec cap sync android
 
       - name: Restore Keystore
-  shell: bash
-  run: |
-    printf '%s' '${{ secrets.KEYSTORE_BASE64 }}' | base64 -d > android/app/misbahi-release.jks
-    ls -lh android/app/misbahi-release.jks
+        shell: bash
+        run: |
+          printf '%s' "${{ secrets.KEYSTORE_BASE64 }}" > keystore.b64
+          echo "Base64 size:"
+          wc -c keystore.b64
+          echo "First 20 chars:"
+          head -c 20 keystore.b64
+          echo ""
+          base64 --decode keystore.b64 > android/app/misbahi-release.jks
+          ls -lh android/app/misbahi-release.jks
 
       - name: Build Debug APK
         working-directory: artifacts/grammar-course/android
-        run: chmod +x gradlew && ./gradlew assembleDebug
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug
 
       - name: Build Release APK
         working-directory: artifacts/grammar-course/android
